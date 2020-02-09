@@ -1,16 +1,20 @@
 package codegene.femicodes.aghedojosephfemi.worker
 
 import android.content.Context
+import android.os.Environment
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import codegene.femicodes.aghedojosephfemi.local.db.AppDatabase
 import codegene.femicodes.aghedojosephfemi.local.entity.CarOwnerEntity
 import codegene.femicodes.aghedojosephfemi.ui.utils.CSV_FILENAME
+import codegene.femicodes.aghedojosephfemi.ui.utils.DIR_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.util.*
@@ -24,7 +28,10 @@ class SeedDatabaseWorker(
         withContext(Dispatchers.IO) {
 
             try {
-                applicationContext.assets.open(CSV_FILENAME).use { inputStream ->
+                val textFile =
+                    File(Environment.getExternalStoragePublicDirectory(DIR_NAME), CSV_FILENAME)
+                if (textFile.exists()) {
+                    val inputStream = FileInputStream(textFile)
                     BufferedReader(
                         InputStreamReader(
                             inputStream,
@@ -55,6 +62,9 @@ class SeedDatabaseWorker(
                             .insertAll(carOwnerList)
                         Result.success()
                     }
+                } else {
+                    Timber.e("File Doesn't exist")
+                    Result.failure()
                 }
 
             } catch (e: Exception) {
