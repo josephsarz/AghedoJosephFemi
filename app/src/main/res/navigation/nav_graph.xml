@@ -3,30 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="codegene.femicodes.aghedojosephfemi.FirstFragment"
+        android:id="@+id/splashFragment"
+        android:name="codegene.femicodes.aghedojosephfemi.ui.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_FilterListFragment"
+            app:destination="@id/FilterListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FilterListFragment"
+        android:name="codegene.femicodes.aghedojosephfemi.ui.filterList.FilterListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_filter_list">
+
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FilterListFragment_to_FilteredResultFragment"
+            app:destination="@id/FilteredResultFragment" />
+        <action
+            android:id="@+id/action_FilterListFragment_to_addFilterFragment"
+            app:destination="@id/addFilterFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="codegene.femicodes.aghedojosephfemi.SecondFragment"
+        android:id="@+id/FilteredResultFragment"
+        android:name="codegene.femicodes.aghedojosephfemi.ui.filteredResult.FilteredResultFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_filtered_result">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_FilteredResultFragment_to_FilterListFragment"
+            app:destination="@id/FilterListFragment" />
 
         <argument
-            android:name="myArg"
-            app:argType="string" />
+            android:name="data"
+            app:argType="codegene.femicodes.aghedojosephfemi.local.entity.FilterEntity" />
+
     </fragment>
+    <fragment
+        android:id="@+id/addFilterFragment"
+        android:name="codegene.femicodes.aghedojosephfemi.ui.addFilter.AddFilterFragment"
+        android:label="fragment_add_filter"
+        tools:layout="@layout/fragment_add_filter">
+        <action
+            android:id="@+id/action_addFilterFragment_to_FilterListFragment"
+            app:destination="@id/FilterListFragment" />
+    </fragment>
+
 </navigation>
