@@ -8,6 +8,7 @@ import timber.log.Timber
 
 class App : DaggerApplication() {
 
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.factory().create(applicationContext)
     }
@@ -18,6 +19,7 @@ class App : DaggerApplication() {
             Stetho.initializeWithDefaults(this)
             Timber.plant(Timber.DebugTree())
         }
+
     }
 
 }
